@@ -3,8 +3,13 @@ import path from 'path';
 
 class Logger {
   constructor() {
+    // Skip file logging on Vercel/serverless (read-only filesystem)
+    this.isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
     this.logDir = './logs';
-    this.ensureLogDir();
+    
+    if (!this.isServerless) {
+      this.ensureLogDir();
+    }
   }
 
   ensureLogDir() {
@@ -20,6 +25,9 @@ class Logger {
   }
 
   async writeToFile(filename, message) {
+    // Skip file writing on serverless (Vercel logs capture console output)
+    if (this.isServerless) return;
+    
     try {
       const filePath = path.join(this.logDir, filename);
       // Using async appendFile to prevent blocking the event loop, which can cause 504 timeouts
