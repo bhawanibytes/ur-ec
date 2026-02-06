@@ -28,6 +28,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy for Vercel (required for express-rate-limit to work correctly)
+app.set('trust proxy', 1);
+
 // Database connection (cached for serverless)
 let cachedDb = null;
 
