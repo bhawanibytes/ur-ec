@@ -43,12 +43,16 @@ const connectDB = async () => {
       throw new Error("MONGODB_URI environment variable is required");
     }
     
-    // Serverless-optimized settings
+    // Serverless-optimized settings with TLS for MongoDB Atlas
     await mongoose.connect(mongoURI, {
       serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 5000,
+      connectTimeoutMS: 10000,
       maxPoolSize: 10, // Smaller pool for serverless
-      socketTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      tls: true,
+      tlsAllowInvalidCertificates: false,
+      retryWrites: true,
+      w: 'majority',
     });
     
     cachedDb = mongoose.connection;
