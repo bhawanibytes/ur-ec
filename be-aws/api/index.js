@@ -50,7 +50,9 @@ const connectDB = async () => {
     await mongoose.connect(mongoURI, {
       serverSelectionTimeoutMS: 5000,
       connectTimeoutMS: 10000,
+      minPoolSize:5,
       maxPoolSize: 10, // Smaller pool for serverless
+      maxIdleTimeMS: 1000 * 60 * 10, 
       socketTimeoutMS: 45000,
       tls: true,
       tlsAllowInvalidCertificates: false,
