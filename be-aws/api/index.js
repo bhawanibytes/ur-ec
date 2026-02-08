@@ -31,42 +31,56 @@ const app = express();
 // Trust proxy for Vercel (required for express-rate-limit to work correctly)
 app.set('trust proxy', 1);
 
-// Database connection (cached for serverless)
-let cachedDb = null;
+// MongoDB connection caching for serverless
+// Use global to persist connection across warm invocations
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
 const connectDB = async () => {
-  if (cachedDb && mongoose.connection.readyState === 1) {
-    return cachedDb;
+  // Return existing connection if available and connected
+  if (cached.conn && mongoose.connection.readyState === 1) {
+    return cached.conn;
   }
+
+  // If a connection is already being established, wait for it
+  if (cached.promise) {
+    cached.conn = await cached.promise;
+    return cached.conn;
+  }
+
+  const mongoURI = process.env.MONGODB_URI || process.env.MONGODB_URL;
   
-  try {
-    const mongoURI = process.env.MONGODB_URI || process.env.MONGODB_URL;
-    
-    if (!mongoURI) {
-      throw new Error("MONGODB_URI environment variable is required");
-    }
-    
-    // Serverless-optimized settings with TLS for MongoDB Atlas
-    await mongoose.connect(mongoURI, {
-      serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 10000,
-      minPoolSize:5,
-      maxPoolSize: 10, // Smaller pool for serverless
-      maxIdleTimeMS: 1000 * 60 * 10, 
-      socketTimeoutMS: 45000,
-      tls: true,
-      tlsAllowInvalidCertificates: false,
-      retryWrites: true,
-      w: 'majority',
-    });
-    
-    cachedDb = mongoose.connection;
-    console.log("MongoDB connected for serverless");
-    return cachedDb;
-  } catch (error) {
+  if (!mongoURI) {
+    throw new Error("MONGODB_URI environment variable is required");
+  }
+
+  // Create new connection promise
+  cached.promise = mongoose.connect(mongoURI, {
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
+    minPoolSize: 1,        // Minimal pool for serverless
+    maxPoolSize: 5,        // Smaller pool for serverless
+    maxIdleTimeMS: 60000,  // Close idle connections after 1 minute
+    socketTimeoutMS: 45000,
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+    retryWrites: true,
+    w: 'majority',
+    bufferCommands: false, // Disable buffering for serverless
+  }).then((mongoose) => {
+    console.log("MongoDB connected (new connection)");
+    return mongoose.connection;
+  }).catch((error) => {
+    cached.promise = null; // Clear promise on error so we can retry
     console.error("MongoDB connection error:", error.message);
     throw error;
-  }
+  });
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 };
 
 // Security middleware
