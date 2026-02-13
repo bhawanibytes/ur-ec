@@ -5,6 +5,13 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { homeVideosAPI } from "@/lib/api";
 
+// Hardcoded video data
+const HARDCODED_VIDEO = {
+  url: "https://res.cloudinary.com/dmnh10etf/video/upload/v1770789985/Suncity_s_Monarch_Residences_Luxury_3_4_BHK_Homes_in_Sector_78_Gurugram_720P_bachc9.mp4",
+  _id: "hardcoded-video",
+  isActive: true
+};
+
 function HomeVideoComponent() {
   const [video, setVideo] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -29,53 +36,64 @@ function HomeVideoComponent() {
     }
   }, [pathname]);
 
+  // Set hardcoded video when on homepage
   useEffect(() => {
-    const fetchActiveVideo = async () => {
-      // Only fetch video if we're on homepage
-      if (!isHomePage) {
-        return;
-      }
+    //     const fetchActiveVideo = async () => {
+    //   // Only fetch video if we're on homepage
+    //   if (!isHomePage) {
+    //     return;
+    //   }
       
-      try {
-        const response = await homeVideosAPI.getActive();
+    //   try {
+    //     const response = await homeVideosAPI.getActive();
         
-        // Handle different response structures
-        let videoData = null;
-        if (response.data) {
-          // If response.data is an array, find the latest active video
-          if (Array.isArray(response.data)) {
-            // Filter active videos and sort by uploadedAt (newest first)
-            const activeVideos = response.data
-              .filter(v => v.isActive === true)
-              .sort((a, b) => {
-                const dateA = new Date(a.uploadedAt || a.createdAt || 0);
-                const dateB = new Date(b.uploadedAt || b.createdAt || 0);
-                return dateB - dateA; // Newest first
-              });
+    //     // Handle different response structures
+    //     let videoData = null;
+    //     if (response.data) {
+    //       // If response.data is an array, find the latest active video
+    //       if (Array.isArray(response.data)) {
+    //         // Filter active videos and sort by uploadedAt (newest first)
+    //         const activeVideos = response.data
+    //           .filter(v => v.isActive === true)
+    //           .sort((a, b) => {
+    //             const dateA = new Date(a.uploadedAt || a.createdAt || 0);
+    //             const dateB = new Date(b.uploadedAt || b.createdAt || 0);
+    //             return dateB - dateA; // Newest first
+    //           });
             
-            if (activeVideos.length > 0) {
-              videoData = activeVideos[0]; // Get the latest one
-            }
-          }
-          // Check nested structure: response.data.data (single object)
-          else if (response.data.data) {
-            videoData = response.data.data;
-          } 
-          // Check direct structure: response.data (if backend returns { data: video })
-          else if (response.data.url || response.data._id) {
-            videoData = response.data;
-          }
-        }
+    //         if (activeVideos.length > 0) {
+    //           videoData = activeVideos[0]; // Get the latest one
+    //         }
+    //       }
+    //       // Check nested structure: response.data.data (single object)
+    //       else if (response.data.data) {
+    //         videoData = response.data.data;
+    //       } 
+    //       // Check direct structure: response.data (if backend returns { data: video })
+    //       else if (response.data.url || response.data._id) {
+    //         videoData = response.data;
+    //       }
+    //     }
         
-        if (videoData) {
-          setVideo(videoData);
-        }
-      } catch (error) {
-        // Silently handle errors
-      }
-    };
+    //     if (videoData) {
+    //       setVideo(videoData);
+    //     }
+    //   } catch (error) {
+    //     // Silently handle errors
+    //   }
+    // };
 
-    fetchActiveVideo();
+    // fetchActiveVideo();
+
+    if (isHomePage) {
+      setVideo(HARDCODED_VIDEO);
+    }
+    //       } catch (error) {
+    //     // Silently handle errors
+    //   }
+    // };
+
+    // fetchActiveVideo();
   }, [isHomePage]);
 
   useEffect(() => {

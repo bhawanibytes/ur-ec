@@ -119,7 +119,7 @@ export default function Hero() {
     if (activeTab === "sell") {
       // Post property feature is disabled
       alert(
-        "Post Property feature is currently disabled. Please contact us for assistance.",
+        "Post Property feature is currently disabled. Please contact us forsdfsd assistance.",
       );
       return;
     }
