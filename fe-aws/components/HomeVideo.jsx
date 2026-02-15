@@ -12,7 +12,16 @@ const HARDCODED_VIDEO = {
   isActive: true
 };
 
-function HomeVideoComponent() {
+function HomeVideoComponent({ 
+  bottom = '20px',
+  right = '20px',
+  top,
+  left,
+  width = '300px',
+  maxWidth = '90vw',
+  zIndex = 1000,
+  videoUrl = HARDCODED_VIDEO.url
+}) {
   const [video, setVideo] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -86,7 +95,7 @@ function HomeVideoComponent() {
     // fetchActiveVideo();
 
     if (isHomePage) {
-      setVideo(HARDCODED_VIDEO);
+      setVideo({ ...HARDCODED_VIDEO, url: videoUrl });
     }
     //       } catch (error) {
     //     // Silently handle errors
@@ -94,7 +103,7 @@ function HomeVideoComponent() {
     // };
 
     // fetchActiveVideo();
-  }, [isHomePage]);
+  }, [isHomePage, videoUrl]);
 
   useEffect(() => {
     // Auto-play video when component mounts and video is loaded
@@ -150,11 +159,13 @@ function HomeVideoComponent() {
     <div 
       className="position-fixed home-video-container"
       style={{
-        bottom: '20px',
-        right: '20px',
-        zIndex: 1000,
-        width: '220px',
-        maxWidth: '90vw',
+        ...(bottom !== undefined && { bottom }),
+        ...(right !== undefined && { right }),
+        ...(top !== undefined && { top }),
+        ...(left !== undefined && { left }),
+        zIndex,
+        width,
+        maxWidth,
       }}
     >
       <div 

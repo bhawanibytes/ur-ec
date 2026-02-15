@@ -299,7 +299,7 @@ export default function Hero() {
       <div className="heroSearch position-absolute z-10 top-100 start-50 translate-middle w-100 px-2 px-md-5">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-12 col-md-10 col-lg-8">
+            <div className="col-12 col-md-8 col-lg-6">
               <div
                 className="searchContainer rounded-4 shadow-lg p-3 p-md-5 bg-white"
                 style={{

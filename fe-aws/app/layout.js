@@ -62,7 +62,22 @@ export default function RootLayout({ children }) {
                     {children}
                     <MobileNav />
                     <WhatsAppButton />
-                    <HomeVideo />
+                    <HomeVideo 
+                      bottom="30px" 
+                      right="20px" 
+                      width="350px" 
+                      maxWidth="90vw" 
+                      zIndex={1000}
+                      videoUrl="https://res.cloudinary.com/dmnh10etf/video/upload/v1770789985/Suncity_s_Monarch_Residences_Luxury_3_4_BHK_Homes_in_Sector_78_Gurugram_720P_bachc9.mp4"
+                    />
+                    <HomeVideo 
+                      bottom="20px" 
+                      left="20px" 
+                      width="220px" 
+                      maxWidth="90vw" 
+                      zIndex={1000}
+                      videoUrl="https://res.cloudinary.com/dmnh10etf/video/upload/v1770989667/new_video1_wttduj.mp4"
+                    />
                     <ScrollToTop />
                   </ErrorBoundary>
                 </PropertiesProvider>
