@@ -285,7 +285,7 @@ export default function Hero() {
   return (
     <main className="heroSection position-relative z-0">
       <Image
-        src="https://d16gdc5rm7f21b.cloudfront.net/uploads/1768570493925-elie-saab.webp"
+        src="/img/m3m-elie-saab-sm.webp"
         alt="Hero Image"
         fill
         className="object-fit-cover"
