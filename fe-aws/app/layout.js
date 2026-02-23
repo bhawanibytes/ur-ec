@@ -76,7 +76,7 @@ export default function RootLayout({ children }) {
                       width="220px" 
                       maxWidth="90vw" 
                       zIndex={1000}
-                      videoUrl="https://res.cloudinary.com/dmnh10etf/video/upload/v1770989667/new_video1_wttduj.mp4"
+                      videoUrl="https://youtube.com/shorts/qbD0p0r2AVU?si=zzNEaPHRB4j5_FqY"
                     />
                     <ScrollToTop />
                   </ErrorBoundary>

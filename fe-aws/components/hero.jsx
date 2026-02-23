@@ -283,25 +283,25 @@ export default function Hero() {
   };
 
   return (
-    <main className="heroSection position-relative z-0">
+    <main className='heroSection position-relative z-0'>
       <Image
-        src="/img/m3m-elie-saab-sm.webp"
-        alt="Hero Image"
+        src='/img/m3m-elie-saab-sm.webp'
+        alt='Hero Image'
         fill
-        className="object-fit-cover"
+        className='object-fit-cover'
         priority
-        loading="eager"
+        loading='eager'
         quality={85}
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-        sizes="100vw"
+        placeholder='blur'
+        blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k='
+        sizes='100vw'
       />
-      <div className="heroSearch position-absolute z-10 top-100 start-50 translate-middle w-100 px-2 px-md-5">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-6">
+      <div className='heroSearch position-absolute z-10 top-100 start-50 translate-middle w-100 px-2 px-md-5'>
+        <div className='container'>
+          <div className='row justify-content-center'>
+            <div className='col-12 col-md-8 col-lg-6'>
               <div
-                className="searchContainer rounded-4 shadow-lg p-3 p-md-5 bg-white"
+                className='searchContainer rounded-4 shadow-lg p-3 p-md-5 bg-white'
                 style={{
                   background: "rgba(255, 255, 255, 0.1)",
                   backdropFilter: "blur(20px)",
@@ -311,7 +311,7 @@ export default function Hero() {
                 }}
               >
                 {/* Tab Navigation */}
-                <div className="d-none mb-3 mb-md-4" style={{ gap: "6px" }}>
+                <div className='d-none mb-3 mb-md-4' style={{ gap: "6px" }}>
                   <button
                     className={`btn flex-fill ${activeTab === "buy" ? "active" : ""}`}
                     onClick={() => setActiveTab("buy")}
@@ -389,9 +389,9 @@ export default function Hero() {
                 {activeTab === "sell" ? (
                   // Sell Tab - HIDDEN
                   <div style={{ display: "none" }}>
-                    <div className="text-center">
+                    <div className='text-center'>
                       <h4
-                        className="mb-3 fs-5 fs-md-4"
+                        className='mb-3 fs-5 fs-md-4'
                         style={{
                           color: "rgba(255, 255, 255, 0.95)",
                           fontWeight: "600",
@@ -400,7 +400,7 @@ export default function Hero() {
                         Ready to sell your property?
                       </h4>
                       <p
-                        className="mb-4 small"
+                        className='mb-4 small'
                         style={{
                           color: "rgba(255, 255, 255, 0.8)",
                           fontSize: "14px",
@@ -410,7 +410,7 @@ export default function Hero() {
                         buyers
                       </p>
                       <button
-                        className="btn px-3 px-md-4 py-2"
+                        className='btn px-3 px-md-4 py-2'
                         onClick={handleSearch}
                         style={{
                           background: "rgba(220, 53, 69, 0.9)",
@@ -437,16 +437,16 @@ export default function Hero() {
                             "0 4px 16px rgba(220, 53, 69, 0.3)";
                         }}
                       >
-                        <i className="bi bi-plus-circle-fill me-2"></i>
+                        <i className='bi bi-plus-circle-fill me-2'></i>
                         Post Your Property
                       </button>
                     </div>
                   </div>
                 ) : activeTab === "rent" ? (
                   // Rent Tab - Show rental properties message
-                  <div className="text-center">
+                  <div className='text-center'>
                     <h4
-                      className="mb-3 fs-5 fs-md-4"
+                      className='mb-3 fs-5 fs-md-4'
                       style={{
                         color: "rgba(255, 255, 255, 0.95)",
                         fontWeight: "600",
@@ -455,7 +455,7 @@ export default function Hero() {
                       Find Your Perfect Rental
                     </h4>
                     <p
-                      className="mb-4 small"
+                      className='mb-4 small'
                       style={{
                         color: "rgba(255, 255, 255, 0.8)",
                         fontSize: "14px",
@@ -465,7 +465,7 @@ export default function Hero() {
                       properties
                     </p>
                     <button
-                      className="btn px-3 px-md-4 py-2"
+                      className='btn px-3 px-md-4 py-2'
                       onClick={() =>
                         router.push("/properties?action=Rent&type=regular")
                       }
@@ -494,7 +494,7 @@ export default function Hero() {
                           "0 4px 16px rgba(220, 53, 69, 0.3)";
                       }}
                     >
-                      <i className="bi bi-house-door-fill me-2"></i>
+                      <i className='bi bi-house-door-fill me-2'></i>
                       View Rental Properties
                     </button>
                   </div>
@@ -502,10 +502,10 @@ export default function Hero() {
                   // Buy/Rent Tabs - Search functionality
                   <>
                     {/* Search Input */}
-                    <div className="position-relative mb-3 ">
-                      <div className="input-group">
+                    <div className='position-relative mb-3 '>
+                      <div className='input-group'>
                         <span
-                          className="input-group-text border border-[#dcdcdc]"
+                          className='input-group-text border border-[#dcdcdc]'
                           style={{
                             background: "rgba(255, 255, 255, 0.2)",
                             border: "1px solid rgba(255, 255, 255, 0.3)",
@@ -514,15 +514,15 @@ export default function Hero() {
                           }}
                         >
                           <i
-                            className="bi bi-geo-alt-fill"
+                            className='bi bi-geo-alt-fill'
                             style={{ color: "rgba(0, 0, 0, 0.8)" }}
                           ></i>
                         </span>
                         <input
                           ref={searchRef}
-                          type="text"
-                          className="form-control border-start-0"
-                          placeholder="Search by builder, or project name..."
+                          type='text'
+                          className='form-control border-start-0'
+                          placeholder='Search by builder, or project name...'
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           onKeyPress={handleKeyPress}
@@ -538,7 +538,7 @@ export default function Hero() {
                             backdropFilter: "blur(10px)",
                             color: "#333333",
                             fontSize: "13px",
-                            padding: "10px 14px",
+                            padding: "16px 14px",
                           }}
                         />
                       </div>
@@ -546,7 +546,7 @@ export default function Hero() {
                       {/* Autocomplete Suggestions */}
                       {showSuggestions && suggestions.length > 0 && (
                         <div
-                          className="position-absolute w-100 mt-1 rounded-3 shadow-lg"
+                          className='position-absolute w-100 mt-1 rounded-3 shadow-lg'
                           style={{
                             background: "rgba(255, 255, 255, 0.95)",
                             backdropFilter: "blur(20px)",
@@ -559,7 +559,7 @@ export default function Hero() {
                           {suggestions.map((suggestion, index) => (
                             <div
                               key={index}
-                              className="px-3 py-2 cursor-pointer d-flex align-items-center"
+                              className='px-3 py-2 cursor-pointer d-flex align-items-center'
                               onClick={() => handleSuggestionClick(suggestion)}
                               style={{
                                 borderBottom:
@@ -585,7 +585,7 @@ export default function Hero() {
                                       : "bi-house-door-fill"
                                 } me-2 text-primary`}
                               ></i>
-                              <span className="text-dark">
+                              <span className='text-dark'>
                                 {suggestion.display}
                               </span>
                             </div>
@@ -596,7 +596,7 @@ export default function Hero() {
                       {/* Search Error */}
                       {searchError && (
                         <div
-                          className="mt-2 px-3 py-2 rounded-3"
+                          className='mt-2 px-3 py-2 rounded-3'
                           style={{
                             background: "rgba(220, 53, 69, 0.1)",
                             border: "1px solid rgba(220, 53, 69, 0.3)",
@@ -604,7 +604,7 @@ export default function Hero() {
                             fontSize: "12px",
                           }}
                         >
-                          <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                          <i className='bi bi-exclamation-triangle-fill me-2'></i>
                           {searchError}
                         </div>
                       )}
@@ -612,7 +612,7 @@ export default function Hero() {
 
                     {/* Search Button */}
                     <button
-                      className="btn w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                      className='btn w-100 py-2 d-flex align-items-center justify-content-center gap-2'
                       onClick={handleSearch}
                       style={{
                         fontSize: "13px",
@@ -639,7 +639,7 @@ export default function Hero() {
                           "0 4px 16px rgba(220, 53, 69, 0.3)";
                       }}
                     >
-                      <i className="bi bi-search"></i>
+                      <i className='bi bi-search'></i>
                       Search {activeTab === "buy" ? "Properties" : "Rentals"}
                     </button>
                   </>

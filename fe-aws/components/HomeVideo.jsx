@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { homeVideosAPI } from "@/lib/api";
+// import { homeVideosAPI } from "@/lib/api";
 
 // Hardcoded video data
 const HARDCODED_VIDEO = {
@@ -11,6 +11,20 @@ const HARDCODED_VIDEO = {
   _id: "hardcoded-video",
   isActive: true
 };
+
+// Extract YouTube video ID from various YouTube URL formats (including Shorts)
+function getYouTubeId(url) {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/shorts\/|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/,
+    /youtube\.com\/watch\?(?:.*&)?v=([\w-]{11})/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
 
 function HomeVideoComponent({ 
   bottom = '20px',
@@ -25,9 +39,10 @@ function HomeVideoComponent({
   const [video, setVideo] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [isHomePage, setIsHomePage] = useState(false);
   const videoRef = useRef(null);
+  const iframeRef = useRef(null);
   const pathname = usePathname();
 
   // Check if we're on the homepage
@@ -143,10 +158,20 @@ function HomeVideoComponent({
 
   const handleMuteToggle = (e) => {
     e.stopPropagation();
+    const newMuted = !isMuted;
+    // Native video
     if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+      videoRef.current.muted = newMuted;
     }
+    // YouTube iframe via IFrame Player API postMessage
+    if (iframeRef.current) {
+      const command = newMuted ? 'mute' : 'unMute';
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: command, args: '' }),
+        '*'
+      );
+    }
+    setIsMuted(newMuted);
   };
 
 
@@ -209,7 +234,7 @@ function HomeVideoComponent({
           ×
         </button>
 
-        {/* Mute/Unmute button */}
+        {/* Mute/Unmute button — shown for both YouTube and native video */}
         <button
           onClick={handleMuteToggle}
           style={{
@@ -241,58 +266,78 @@ function HomeVideoComponent({
           <i className={`bi ${isMuted ? 'bi-volume-mute-fill' : 'bi-volume-up-fill'}`}></i>
         </button>
 
-        {/* Video element */}
-        <video
-          ref={videoRef}
-          src={video.url}
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-            maxHeight: '350px',
-          }}
-          loop
-          muted={isMuted}
-          playsInline
-          preload="metadata"
-          onClick={handlePlayPause}
-          onPlay={() => {
-            setIsPlaying(true);
-          }}
-          onPause={() => {
-            setIsPlaying(false);
-          }}
-        />
-
-        {/* Play/Pause overlay (shows when paused) */}
-        {!isPlaying && (
-          <div
-            onClick={handlePlayPause}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
-            }}
-          >
-            <i className="bi bi-play-fill" style={{ fontSize: '24px', color: '#000', marginLeft: '3px' }}></i>
-          </div>
-        )}
+        {/* Video element — YouTube iframe or native video */}
+        {(() => {
+          const ytId = getYouTubeId(video.url);
+          if (ytId) {
+            const embedUrl = `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=0&loop=1&playlist=${ytId}&playsinline=1&rel=0&modestbranding=1&enablejsapi=1`;
+            return (
+              <iframe
+                ref={iframeRef}
+                src={embedUrl}
+                style={{
+                  width: '100%',
+                  height: '390px',
+                  display: 'block',
+                  border: 'none',
+                }}
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                title="Home Video"
+              />
+            );
+          }
+          return (
+            <>
+              <video
+                ref={videoRef}
+                src={video.url}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  maxHeight: '350px',
+                }}
+                loop
+                muted={isMuted}
+                playsInline
+                preload="metadata"
+                onClick={handlePlayPause}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+              {/* Play/Pause overlay (shows when paused) */}
+              {!isPlaying && (
+                <div
+                  onClick={handlePlayPause}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
+                  }}
+                >
+                  <i className="bi bi-play-fill" style={{ fontSize: '24px', color: '#000', marginLeft: '3px' }}></i>
+                </div>
+              )}
+            </>
+          );
+        })()}
       </div>
 
       <style jsx>{`
