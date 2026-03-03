@@ -21,6 +21,7 @@ html {
 body {
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
 }
 
 /* GPU acceleration for animations */
@@ -231,27 +232,28 @@ a {
 
 .heroSection {
   margin-top: 4rem;
-  height: 75vh; /* section always 75% of screen height */
+  height: 55vh; /* section always 75% of screen height */
 }
 
 /* Responsive hero section */
 @media (max-width: 768px) {
   .heroSection {
     margin-top: 3.5rem;
-    height: 60vh;
+    height: 40vh;
   }
 }
 
 @media (max-width: 576px) {
   .heroSection {
     margin-top: 3rem;
-    height: 50vh;
+    height: 39vh;
   }
 }
 
 /* Hero Search Bar Styles */
 .heroSearch {
   z-index: 10;
+  top: 110%;
 }
 
 .searchContainer {

@@ -46,8 +46,8 @@ const ScrollToTop = () => {
       onClick={scrollToTop}
       className="btn btn-primary rounded-circle shadow-lg position-fixed"
       style={{
-        bottom: '100px',
-        right: '20px',
+        bottom: '10px',
+        left: '20px',
         width: '50px',
         height: '50px',
         zIndex: 1000,

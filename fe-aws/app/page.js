@@ -28,7 +28,7 @@ export const metadata = {
 
 export default async function Home() {
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Header />
 
       {/* Hero Section with Search Bar */}
@@ -136,6 +136,6 @@ export default async function Home() {
       </ErrorBoundary>
 
       <Footer />
-    </>
+    </div>
   );
 }

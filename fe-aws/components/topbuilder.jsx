@@ -67,7 +67,7 @@ export default function Topbuilder() {
       {/* ================================
              TRUSTED BUILDERS SECTION
              ================================ */}
-      <section className="topBuilderSection py-4 py-md-5">
+      <section className="topBuilderSection py-4 py-md-5" style={{marginTop: "120px"}} >
         {/* Section Header Content */}
 
         <div className="container text-center px-3 px-md-0">
@@ -95,7 +95,7 @@ export default function Topbuilder() {
 
         {/* Builder Cards with Horizontal Scroll */}
         <div className="container mt-4 mt-md-5 px-0">
-          <div className="builderCards d-flex gap-3 gap-md-4 px-3 px-md-0">
+          <div className="builderCards d-flex flex-nowrap overflow-auto gap-3 gap-md-4 px-3 px-md-0 pb-3">
             {loading ? (
               // Skeleton loading
               <>

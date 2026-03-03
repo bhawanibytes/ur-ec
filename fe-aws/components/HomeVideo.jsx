@@ -41,9 +41,33 @@ function HomeVideoComponent({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isHomePage, setIsHomePage] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const videoRef = useRef(null);
   const iframeRef = useRef(null);
   const pathname = usePathname();
+
+  // Track window width for responsive sizing
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Compute responsive values based on viewport width
+  const getResponsiveStyles = () => {
+    if (windowWidth <= 400) {
+      return { width: '110px', right: '12px', bottom: '16px', maxWidth: '40vw' };
+    }
+    if (windowWidth <= 576) {
+      return { width: '95px', right: '12px', bottom: '60px', maxWidth: '27vw' };
+    }
+    if (windowWidth <= 768) {
+      return { width: '100px', right: '12px', bottom: '70px', maxWidth: '28vw' };
+    }
+    // Desktop defaults — use props
+    return { width, right, bottom, maxWidth };
+  };
 
   // Check if we're on the homepage
   useEffect(() => {
@@ -180,17 +204,19 @@ function HomeVideoComponent({
     return null;
   }
 
+  const responsiveStyles = getResponsiveStyles();
+
   return (
     <div 
       className="position-fixed home-video-container"
       style={{
-        ...(bottom !== undefined && { bottom }),
-        ...(right !== undefined && { right }),
+        bottom: responsiveStyles.bottom,
+        right: responsiveStyles.right,
         ...(top !== undefined && { top }),
         ...(left !== undefined && { left }),
         zIndex,
-        width,
-        maxWidth,
+        width: responsiveStyles.width,
+        maxWidth: responsiveStyles.maxWidth,
       }}
     >
       <div 
@@ -272,19 +298,24 @@ function HomeVideoComponent({
           if (ytId) {
             const embedUrl = `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=0&loop=1&playlist=${ytId}&playsinline=1&rel=0&modestbranding=1&enablejsapi=1`;
             return (
-              <iframe
-                ref={iframeRef}
-                src={embedUrl}
-                style={{
-                  width: '100%',
-                  height: '390px',
-                  display: 'block',
-                  border: 'none',
-                }}
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-                title="Home Video"
-              />
+              <div style={{ position: 'relative', width: '100%', paddingBottom: '177.78%' /* 9:16 aspect ratio */ }}>
+                <iframe
+                  ref={iframeRef}
+                  src={embedUrl}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    display: 'block',
+                    border: 'none',
+                  }}
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  title="Home Video"
+                />
+              </div>
             );
           }
           return (
@@ -340,48 +371,7 @@ function HomeVideoComponent({
         })()}
       </div>
 
-      <style jsx>{`
-        @media (max-width: 768px) {
-          .home-video-container {
-            bottom: 90px !important;
-            right: 10px !important;
-            width: 160px !important;
-            max-width: 40vw !important;
-          }
-          
-          .home-video-container video {
-            max-height: 250px !important;
-          }
-          
-          .home-video-container button {
-            width: 20px !important;
-            height: 20px !important;
-            font-size: 12px !important;
-          }
-          
-          .home-video-container button[title*="Mute"] {
-            right: 28px !important;
-            font-size: 10px !important;
-          }
-          
-          .home-video-container .bi-play-fill {
-            font-size: 18px !important;
-          }
-        }
-        
-        @media (max-width: 576px) {
-          .home-video-container {
-            bottom: 90px !important;
-            right: 8px !important;
-            width: 140px !important;
-            max-width: 35vw !important;
-          }
-          
-          .home-video-container video {
-            max-height: 200px !important;
-          }
-        }
-      `}</style>
+
     </div>
   );
 }
@@ -393,4 +383,3 @@ const HomeVideo = dynamic(() => Promise.resolve(HomeVideoComponent), {
 });
 
 export default HomeVideo;
-

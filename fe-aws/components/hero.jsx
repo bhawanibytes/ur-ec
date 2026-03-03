@@ -284,19 +284,43 @@ export default function Hero() {
 
   return (
     <main className='heroSection position-relative z-0'>
+      {/* Small screens (mobile < 768px) */}
       <Image
         src='/img/m3m-elie-saab-sm.webp'
         alt='Hero Image'
         fill
-        className='object-fit-cover'
+        className='object-fit-cover d-block d-md-none'
         priority
         loading='eager'
         quality={85}
-        placeholder='blur'
-        blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k='
         sizes='100vw'
+        unoptimized
       />
-      <div className='heroSearch position-absolute z-10 top-100 start-50 translate-middle w-100 px-2 px-md-5'>
+      {/* Medium screens (tablet 768px–991px) */}
+      <Image
+        src='/img/m3m-elie-saab-md.webp'
+        alt='Hero Image'
+        fill
+        className='object-fit-cover d-none d-md-block d-lg-none'
+        priority
+        loading='eager'
+        quality={85}
+        sizes='100vw'
+        unoptimized
+      />
+      {/* Large screens (desktop ≥ 992px) */}
+      <Image
+        src='/img/m3m-elie-saab-lg.webp'
+        alt='Hero Image'
+        fill
+        className='object-fit-cover d-none d-lg-block'
+        priority
+        loading='eager'
+        quality={85}
+        sizes='100vw'
+        unoptimized
+      />
+      <div className='heroSearch position-absolute z-10 start-50 translate-middle w-100 px-2 px-md-5'>
         <div className='container'>
           <div className='row justify-content-center'>
             <div className='col-12 col-md-8 col-lg-6'>

@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden`}>
         <Auth2FactorProvider>
           <LocationProvider>
             <ImageCacheProvider>
@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
                       videoUrl="https://res.cloudinary.com/dmnh10etf/video/upload/v1770789985/Suncity_s_Monarch_Residences_Luxury_3_4_BHK_Homes_in_Sector_78_Gurugram_720P_bachc9.mp4"
                     /> */}
                     <HomeVideo 
-                      bottom="20px" 
+                      bottom="6px" 
                       right="20px" 
                       width="220px" 
                       maxWidth="90vw" 
