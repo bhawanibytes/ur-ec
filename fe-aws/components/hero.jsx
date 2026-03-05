@@ -286,7 +286,7 @@ export default function Hero() {
     <main className='heroSection position-relative z-0'>
       {/* Small screens (mobile < 768px) */}
       <Image
-        src='/img/m3m-elie-saab-sm.webp'
+        src='https://d8pw2hr56z2an.cloudfront.net/img-assets/c0b5e28aa2590461f5fe9a25589ce11b.webp'
         alt='Hero Image'
         fill
         className='object-fit-cover d-block d-md-none'
@@ -295,10 +295,15 @@ export default function Hero() {
         quality={85}
         sizes='100vw'
         unoptimized
+        onClick={() => {
+          router.push(
+            "https://www.urbanesta.in/properties/6953b47b7d888d96cefc77e8",
+          );
+        }}
       />
       {/* Medium screens (tablet 768px–991px) */}
       <Image
-        src='/img/m3m-elie-saab-md.webp'
+        src='https://d8pw2hr56z2an.cloudfront.net/img-assets/c0b5e28aa2590461f5fe9a25589ce11b.webp'
         alt='Hero Image'
         fill
         className='object-fit-cover d-none d-md-block d-lg-none'
@@ -307,10 +312,15 @@ export default function Hero() {
         quality={85}
         sizes='100vw'
         unoptimized
+        onClick={() => {
+          router.push(
+            "https://www.urbanesta.in/properties/6953b47b7d888d96cefc77e8",
+          );
+        }}
       />
       {/* Large screens (desktop ≥ 992px) */}
       <Image
-        src='/img/m3m-elie-saab-lg.webp'
+        src='https://d8pw2hr56z2an.cloudfront.net/img-assets/c0b5e28aa2590461f5fe9a25589ce11b.webp'
         alt='Hero Image'
         fill
         className='object-fit-cover d-none d-lg-block'
@@ -319,6 +329,11 @@ export default function Hero() {
         quality={85}
         sizes='100vw'
         unoptimized
+        onClick={() => {
+          router.push(
+            "https://www.urbanesta.in/properties/6953b47b7d888d96cefc77e8",
+          );
+        }}
       />
       <div className='heroSearch position-absolute z-10 start-50 translate-middle w-100 px-2 px-md-5'>
         <div className='container'>
